@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Akash – Video Editing for Creators</title>
+<meta name="description" content="Short and long-form video editing by Akash. Send your footage, get a clean edit back. Shorts from ₹500, long videos from ₹3,000.">
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --ink:#13151f; --muted:#555a6e; --line:#dfe2ec;
+  --accent:#3a4fff; --on-accent:#ffffff; --playhead:#ff9f1c;
+  --c1:#3a4fff; --c2:#7b8bff; --c3:#13151f; --track:#e8eaf3;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d0f18; --surface:#161927; --ink:#eef0fa; --muted:#a3a8c0; --line:#272b3f;
+    --accent:#7c8bff; --on-accent:#0d0f18; --playhead:#ffb347;
+    --c1:#7c8bff; --c2:#4b57c9; --c3:#eef0fa; --track:#1d2133;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d0f18; --surface:#161927; --ink:#eef0fa; --muted:#a3a8c0; --line:#272b3f;
+  --accent:#7c8bff; --on-accent:#0d0f18; --playhead:#ffb347;
+  --c1:#7c8bff; --c2:#4b57c9; --c3:#eef0fa; --track:#1d2133;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.6;-webkit-text-size-adjust:100%;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+h1,h2,h3{line-height:1.12;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.6rem,6vw,2.1rem);font-weight:750;margin-bottom:8px}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.lead{font-size:1.1rem;color:var(--muted);margin-top:16px;max-width:34ch}
+.sub{color:var(--muted);margin-bottom:28px}
+
+/* top bar */
+.bar{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-weight:800;letter-spacing:-.02em;font-size:1.15rem}
+.handle{color:var(--accent);font-weight:600;text-decoration:none}
+.handle:hover{text-decoration:underline}
+
+/* hero */
+.hero{padding-top:24px;padding-bottom:48px}
+.timeline{position:relative;margin:36px 0 32px;padding:12px;border-radius:14px;background:var(--track);overflow:hidden}
+.row{display:flex;gap:6px;height:26px;margin:6px 0}
+.row i{display:block;border-radius:6px;background:var(--c1)}
+.row i:nth-child(2n){background:var(--c2)}
+.row.b i:nth-child(3n){background:var(--c3);opacity:.85}
+.playhead{position:absolute;top:0;bottom:0;left:12px;width:3px;background:var(--playhead);border-radius:2px;
+  animation:scrub 2.6s cubic-bezier(.6,0,.2,1) .3s forwards}
+.playhead::before{content:"";position:absolute;top:0;left:-5px;width:13px;height:10px;background:var(--playhead);
+  clip-path:polygon(0 0,100% 0,50% 100%)}
+@keyframes scrub{to{left:calc(100% - 15px)}}
+@media (prefers-reduced-motion:reduce){.playhead{animation:none;left:62%}}
+
+/* buttons */
+.btns{display:flex;flex-direction:column;gap:12px}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:14px 22px;
+  border-radius:14px;font-size:1.05rem;font-weight:700;text-decoration:none;
+  border:2px solid var(--accent);transition:transform .15s,background .15s;
+}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:focus-visible,.handle:focus-visible{outline:3px solid var(--playhead);outline-offset:3px}
+.btn svg{width:20px;height:20px;flex:none}
+@media (min-width:560px){.btns{flex-direction:row}.btn{flex:1}}
+
+/* services */
+.cards{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px}
+.card .price{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin:12px 0 4px}
+.card .per{color:var(--muted);font-size:.95rem}
+.card p.desc{margin-top:14px;color:var(--muted)}
+.card.long{border-color:var(--accent)}
+@media (min-width:640px){.cards{grid-template-columns:1fr 1fr}}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 28px 56px;counter-increment:s}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;
+  background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:800;
+}
+.steps li::after{content:"";position:absolute;left:18px;top:44px;bottom:6px;width:2px;background:var(--line)}
+.steps li:last-child{padding-bottom:0}
+.steps li:last-child::after{display:none}
+.steps h3{margin-bottom:4px}
+.steps p{color:var(--muted)}
+
+/* contact */
+.contact{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.note{margin-top:20px;color:var(--muted);font-size:.95rem}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="logo">Akash Edits</div>
+    <a class="handle" href="https://www.instagram.com/akash.vlog20k/" target="_blank" rel="noopener">@akash.vlog20k</a>
+  </div>
+
+  <header class="hero">
+    <h1>Your footage, edited and ready to post.</h1>
+    <p class="lead">I turn raw clips into clean, watchable videos. Shorts and long-form, at fair prices.</p>
+
+    <div class="timeline" aria-hidden="true">
+      <div class="row"><i style="flex:3"></i><i style="flex:1"></i><i style="flex:4"></i><i style="flex:2"></i><i style="flex:3"></i></div>
+      <div class="row b"><i style="flex:2"></i><i style="flex:3"></i><i style="flex:1"></i><i style="flex:4"></i><i style="flex:2"></i><i style="flex:1"></i></div>
+      <div class="playhead"></div>
+    </div>
+
+    <div class="btns">
+      <a class="btn primary" href="mailto:akash.singh979854@gmail.com?subject=Video%20editing%20enquiry&body=Hi%20Akash%2C%0D%0A%0D%0AName%3A%20%0D%0AVideo%20type%20(short%20or%20long)%3A%20%0D%0ALink%20to%20footage%3A%20%0D%0A">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email me
+      </a>
+      <a class="btn ghost" href="https://ig.me/m/akash.vlog20k" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        DM on Instagram
+      </a>
+    </div>
+  </header>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <h2>Services</h2>
+    <p class="sub">Two formats. Simple prices.</p>
+    <div class="cards">
+      <article class="card">
+        <h3>Short video editing</h3>
+        <div class="price">₹500 – ₹600</div>
+        <div class="per">per video</div>
+        <p class="desc">Fast, punchy edits for Reels, Shorts and TikTok-style clips.</p>
+      </article>
+      <article class="card long">
+        <h3>Long-form video editing</h3>
+        <div class="price">₹3,000 – ₹4,000</div>
+        <div class="per">per video</div>
+        <p class="desc">Smooth, well-paced edits for YouTube videos, vlogs and talks.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:8px">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">Four easy steps from raw clips to final video.</p>
+    <ol class="steps">
+      <li><h3>Send your footage</h3><p>Share a Drive or Dropbox link with your clips and tell me what you want.</p></li>
+      <li><h3>Get the first cut</h3><p>I edit your video and send you the first version to review.</p></li>
+      <li><h3>Ask for revisions</h3><p>Tell me what to change. I’ll tweak it until you’re happy.</p></li>
+      <li><h3>Receive the final video</h3><p>You get the finished file, ready to upload.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Let’s work together</h2>
+    <p class="sub">Reach me in one of two ways. I’ll reply as soon as I can.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:akash.singh979854@gmail.com?subject=Video%20editing%20enquiry&body=Hi%20Akash%2C%0D%0A%0D%0AName%3A%20%0D%0AVideo%20type%20(short%20or%20long)%3A%20%0D%0ALink%20to%20footage%3A%20%0D%0A">Email me</a>
+      <a class="btn ghost" href="https://ig.me/m/akash.vlog20k" target="_blank" rel="noopener">DM on Instagram</a>
+    </div>
+    <p class="note">Instagram: <a class="handle" href="https://www.instagram.com/akash.vlog20k/" target="_blank" rel="noopener">@akash.vlog20k</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© Akash · Video editing</div>
+</footer>
+
+</body>
+</html>
